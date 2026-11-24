@@ -1,30 +1,53 @@
 # social-video-skills
 
-Skills de [Claude Code](https://claude.com/claude-code) para producir videos verticales para redes
+Skills de Claude (Claude Desktop y Claude Code) para producir videos verticales para redes
 (TikTok / Reels / Shorts) a partir de un clip: voz en off con IA, subtítulos karaoke, hook, placa de
 call to action y música de fondo, todo renderizado con Remotion.
 
-## Instalar con un prompt
+## Instalar en Claude Desktop (app de escritorio)
 
-Abrí Claude Code en cualquier carpeta y pegá:
+El pipeline corre **en tu compu** (ffmpeg, Node, Remotion), así que necesita una superficie de Claude
+con acceso local. En la app Claude Desktop hay tres; solo dos sirven:
+
+| Dónde | ¿Funciona? | Notas |
+|---|---|---|
+| **Pestaña Code** | ✅ Recomendado | Corre directo en tu máquina, igual que donde se armó y probó esto. |
+| **Cowork** | ⚠️ Debería, sin probar | Corre en una VM local; hay que abrir la red y puede faltar instalar herramientas adentro. |
+| **Chat común** | ❌ No | Las skills corren en un sandbox remoto sin acceso a tus archivos ni a ffmpeg. |
+
+### Opción A — pestaña Code (recomendada)
+
+1. Abrí Claude Desktop → pestaña **Code** → elegí una carpeta de trabajo (por ejemplo `Documentos/videos`).
+2. Pegá este prompt:
 
 > Instalá las skills de video de https://github.com/perzequiel/social-video-skills: cloná el repo en
-> `~/social-video-skills`, corré `./install.sh`, instalá las dependencias que falten y avisame cuando esté listo.
+> `~/social-video-skills`, corré `./install.sh`, instalá las dependencias que falten (node, ffmpeg, uv)
+> y avisame cuando esté listo.
 
-Después reiniciá Claude Code. Para actualizar: `git pull && ./install.sh` en esa carpeta.
+3. Aceptá los permisos que pida. Cuando termine, abrí una sesión nueva en la pestaña Code y pedile el video.
 
-### Alternativa: como plugin
+No hace falta instalar Claude Code por terminal. Para actualizar: "actualizá las skills de video
+(`git pull && ./install.sh` en `~/social-video-skills`)".
+
+### Opción B — Cowork
+
+1. **Settings → Capabilities**: activar ejecución de código y poner el acceso de red en **All domains**
+   (la voz usa servidores de Microsoft y Remotion descarga Chromium; con la red por defecto falla).
+2. **Customize → Plugins → Add → Add marketplace** → `perzequiel/social-video-skills` → instalar y activar
+   el plugin `social-video`. (Alternativa: **Customize → Skills → + → Upload a skill** con los `.zip` de
+   [Releases](https://github.com/perzequiel/social-video-skills/releases).)
+3. Empezar una tarea y **conectar la carpeta** donde está el video; el resultado sale en esa misma carpeta.
+4. La primera vez Claude tiene que instalar node/ffmpeg/uv dentro de la VM; probá con un video corto.
+
+La skill `suno-cover` (Chrome) está pensada para la pestaña Code.
+
+### Claude Code (terminal)
+
+Mismo prompt de la opción A, o como plugin:
 
 ```
 /plugin marketplace add perzequiel/social-video-skills
 /plugin install social-video@social-video-skills
-```
-
-### Manual
-
-```bash
-git clone https://github.com/perzequiel/social-video-skills.git ~/social-video-skills
-cd ~/social-video-skills && ./install.sh
 ```
 
 ## Qué trae
@@ -37,7 +60,7 @@ cd ~/social-video-skills && ./install.sh
 
 ## Requisitos
 
-- Claude Code
+- Claude Desktop (pestaña Code o Cowork, plan pago) o Claude Code
 - `node` ≥ 18, `ffmpeg` (con `zscale` para clips HDR de iPhone), `uv` — en macOS: `brew install node ffmpeg uv`
 - Opcional: `whisper-cpp` (modo talking-head), Chrome + extensión Claude in Chrome (Suno)
 - Internet para la voz (edge-tts usa el servicio de voces de Microsoft; solo se envía el guion)

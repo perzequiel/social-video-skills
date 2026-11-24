@@ -24,8 +24,22 @@ ffmpeg -version    # y: ffmpeg -filters | grep -E " zscale| tonemap "  (para cli
 uvx --version      # uv: corre edge-tts sin instalar nada global
 whisper-cli -h     # solo modo talking-head (brew install whisper-cpp)
 ```
-Si falta algo, decirle al usuario qué y cómo instalarlo (macOS: `brew install node ffmpeg uv whisper-cpp`)
-y pedir ok antes de instalar. edge-tts necesita internet (servicio de Microsoft; solo se envía el guion).
+Si falta algo, decirle al usuario qué y pedir ok antes de instalar. edge-tts necesita internet
+(servicio de Microsoft; solo se envía el guion).
+
+- **macOS** (Claude Code / pestaña Code de Claude Desktop): `brew install node ffmpeg uv whisper-cpp`.
+  Sin Homebrew: instalarlo primero (pide la contraseña del usuario → que lo corra él).
+- **Windows**: `winget install OpenJS.NodeJS Gyan.FFmpeg astral-sh.uv`.
+- **Cowork / VM Linux**: `apt-get install -y ffmpeg nodejs npm` (o nvm si node < 18) y
+  `curl -LsSf https://astral.sh/uv/install.sh | sh`. Remotion además descarga su Chromium en el primer
+  render y puede pedir libs del sistema (`npx remotion browser ensure` lo muestra). Si npm, edge-tts o
+  la descarga de Chromium fallan por red: pedirle al usuario que ponga **Settings → Capabilities →
+  acceso de red en "All domains"**. Trabajar siempre dentro de la carpeta que el usuario conectó
+  (ahí va `videos/` y el mp4 final); si no hay carpeta conectada, pedirla.
+- **Chat común (sandbox remoto, sin carpeta local)**: este pipeline no corre ahí. Decirle al usuario
+  que use la pestaña Code o Cowork de Claude Desktop.
+- Sin `zscale` en ffmpeg: `prep.mjs` falla con clips HDR → usar como fallback
+  `-vf "format=yuv420p"` avisando que los colores pueden quedar lavados.
 
 ## 1. Estructura en el proyecto del usuario
 
