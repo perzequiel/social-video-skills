@@ -1,0 +1,11 @@
+{
+  "name": "social-video-skills",
+  "owner": {"name": "perzequiel"},
+  "plugins": [
+    {
+      "name": "social-video",
+      "source": "./",
+      "description": "Videos verticales para redes con Remotion: voz en off IA, subtítulos karaoke, hook, CTA y música."
+    }
+  ]
+}

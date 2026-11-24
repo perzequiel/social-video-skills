@@ -1,0 +1,22 @@
+{
+  "name": "social-video-voiceover",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "setup": "node gen-music.mjs && node gen-music-punch.mjs",
+    "build": "node build.mjs",
+    "prep": "node prep.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.380",
+    "@remotion/google-fonts": "4.0.380",
+    "remotion": "4.0.380",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.7.2"
+  }
+}
